@@ -15,6 +15,11 @@ var restaurantSchema = new Schema({
 	address: String,
 	city: String,
 	tel: String,
+	desc: String,
+	email: String,
+	category:[{
+		name: String
+	}]
 	menu:{
 		sides:[dish],
 		firsts:[dish],
