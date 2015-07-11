@@ -2,6 +2,7 @@ var express = require("express");
 var mongoose = require("mongoose");
 var config = require('./config/config');
 var bodyParser = require("body-parser");
+var cors= require('cors');
 var api = require('./api/api');
 var app = express();
 
@@ -15,6 +16,7 @@ mongoose.connect(dbUrl,function(err){
 	console.log('connected');
 });
 
+app.use(cors());
 
 app.get('/restaurants', api.restaurants);
 
