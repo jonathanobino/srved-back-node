@@ -50,6 +50,7 @@ var api={
 		    res.send(response.clientToken);
 		});
 	},
+
 	create_submerchant: function(res, req){
 		var merchantAccountParams = {
 		individual: {
@@ -75,7 +76,7 @@ var api={
 
 		gateway.merchantAccount.create(merchantAccountParams, function (err, result) {
 			console.log(result);
-			var merchant_id = result.merchant_id;
+			res.send(result.merchant_id); 
 		});
 	},
 
