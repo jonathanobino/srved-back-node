@@ -6,9 +6,9 @@ var sendgrid = require('sendgrid')("SG.ww9Hd8juSaieq5ojG7Bm4w.6wp0IRik6PpbNXy_T7
 
 var gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
-  merchantId: "dh78rjnkdfz7wjjw",
-  publicKey: "xnhtx9z5c5sr2gs2",
-  privateKey: "a4d56b5637fffe81a34ac061f18b5a02"
+  merchantId: "w7j5nsd5tjh8mkv7",
+  publicKey: "gcdb6pyrgzm46mvh",
+  privateKey: "ab0018a215b1c1cb18d94c1d84c78098"
 });
 
 var api={
@@ -50,42 +50,83 @@ var api={
 		    res.send(response.clientToken);
 		});
 	},
+	create_submerchant: function(res, req){
+		var merchantAccountParams = {
+		individual: {
+		  firstName: "Jane",
+		  lastName: "Doe",
+		  email: "jane@14ladders.com",
+		  phone: "5553334444",
+		  dateOfBirth: "1981-11-19",
+		  address: {
+		    streetAddress: "111 Main St",
+		    locality: "Chicago",
+		    region: "IL",
+		    postalCode: "60622"
+		  }
+		},
+		funding: {
+		  destination: braintree.MerchantAccount.FundingDestination.Email,
+		  email: "jane@14ladders.com"
+		},
+		tosAccepted: true,
+		masterMerchantAccountId: "signofactory"
+		};
+
+		gateway.merchantAccount.create(merchantAccountParams, function (err, result) {
+			console.log(result);
+			var merchant_id = result.merchant_id;
+		});
+	},
+
 	checkout: function(req,res){
 
 		//var customer_email = req.body.customer_email;
 
 		var nonce = req.body.payment_method_nonce;
-		var customer = new sendgrid.Email();
+		// var customer = new sendgrid.Email();
 
-		//customer.addTo(customer_email);
-		customer.addTo("jonobin@gmail.com");
-		customer.setFrom("srved@srved.com");
-		customer.setSubject("Test Mail customer");
-		customer.setHtml("Test Mail customer");
+		// //customer.addTo(customer_email);
+		// customer.addTo("jonobin@gmail.com");
+		// customer.setFrom("srved@srved.com");
+		// customer.setSubject("Test Mail customer");
+		// customer.setHtml("Test Mail customer");
 
-		var bookmark = new sendgrid.Email();
-		bookmark.addTo("signorettif@gmail.com");
-		bookmark.setFrom("srved@srved.com");
-		bookmark.setSubject("Test Mail restaurant");
-		bookmark.setHtml("Test Mail restaurant");
+		// var bookmark = new sendgrid.Email();
+		// bookmark.addTo("signorettif@gmail.com");
+		// bookmark.setFrom("srved@srved.com");
+		// bookmark.setSubject("Test Mail restaurant");
+		// bookmark.setHtml("Test Mail restaurant");
 
+	
 
 		gateway.transaction.sale({
-		  amount: '10.00',
-		  paymentMethodNonce: nonce
+			amount: '20.00',
+			merchantAccountId: merchant_id,
+			paymentMethodNonce: nonce
 		}, function (err, result) {
-			if(err){
-				res.send(err);
-			} else {
-				sendgrid.send(customer, function(err,json){
-					if(err) console.log(err);
-				});
-				sendgrid.send(bookmark, function(err,json){
-					if(err) console.log(err);
-				});
-				res.send(result);
-			}		
+			res.send(result);
 		});
+
+		
+
+
+		// gateway.transaction.sale({
+		//   amount: '10.00',
+		//   paymentMethodNonce: nonce
+		// }, function (err, result) {
+		// 	if(err){
+		// 		res.send(err);
+		// 	} else {
+		// 		sendgrid.send(customer, function(err,json){
+		// 			if(err) console.log(err);
+		// 		});
+		// 		sendgrid.send(bookmark, function(err,json){
+		// 			if(err) console.log(err);
+		// 		});
+		// 		res.send(result);
+		// 	}		
+		// });
 	}
 }
 
