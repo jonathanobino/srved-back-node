@@ -76,7 +76,7 @@ var api={
 
 		gateway.merchantAccount.create(merchantAccountParams, function (err, result) {
 			console.log(result);
-			res.send(result.merchant_id); 
+			res.send(result.merchantAccount.id); 
 		});
 	},
 
