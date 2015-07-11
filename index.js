@@ -6,6 +6,7 @@ var api = require('./api/api');
 var app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.set('port', (process.env.PORT || 5000));
 
 var dbUrl = config.base + config.user+":"+config.psw+config.uri;
 
@@ -25,4 +26,6 @@ app.get('/get_token', api.get_token);
 
 app.post('/checkout', api.checkout);
 
-var server = app.listen(3000);
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
