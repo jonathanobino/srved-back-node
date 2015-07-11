@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var braintree = require("braintree");
 var Restaurant = mongoose.model('Restaurant', require('../models/restaurant'));
-var sendgrid = require('sendgrid').("signorettif","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")
+var sendgrid = require('sendgrid')("signorettif","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")
 
 
 var gateway = braintree.connect({
