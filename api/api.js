@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var braintree = require("braintree");
 var Restaurant = mongoose.model('Restaurant', require('../models/restaurant'));
-var sendgrid = require('sendgrid')("signorettif","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")
+var sendgrid = require('sendgrid')("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")
 
 
 var gateway = braintree.connect({
@@ -52,16 +52,19 @@ var api={
 	},
 	checkout: function(req,res){
 
+		//var customer_email = req.body.customer_email;
+
 		var nonce = req.body.payment_method_nonce;
 		var customer = new sendgrid.Email();
 
+		//customer.addTo(customer_email);
 		customer.addTo("jonobin@gmail.com");
 		customer.setFrom("srved@srved.com");
 		customer.setSubject("Test Mail customer");
 		customer.setHtml("Test Mail customer");
 
 		var bookmark = new sendgrid.Email();
-		bookmark.addTo("jonobin@gmail.com");
+		bookmark.addTo("signorettif@gmail.com");
 		bookmark.setFrom("srved@srved.com");
 		bookmark.setSubject("Test Mail restaurant");
 		bookmark.setHtml("Test Mail restaurant");
@@ -74,8 +77,12 @@ var api={
 			if(err){
 				res.send(err);
 			} else {
-				sendgrid.send(customer);
-				sendgrid.send(bookmark);
+				sendgrid.send(customer, function(err,json){
+					if(err) console.log(err);
+				});
+				sendgrid.send(bookmark, function(err,json){
+					if(err) console.log(err);
+				});
 				res.send(result);
 			}		
 		});
