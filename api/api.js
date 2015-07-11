@@ -49,9 +49,32 @@ var api={
 			if(err) res.send(err);
 		    res.send(response.clientToken);
 		});
-	},
+	}
 
-	create_submerchant: function(res, req){
+	checkout: function(req,res){
+
+		//var customer_email = req.body.customer_email;
+
+		var nonce = req.body.payment_method_nonce;
+		// var customer = new sendgrid.Email();
+
+		// //customer.addTo(customer_email);
+		// customer.addTo("jonobin@gmail.com");
+		// customer.setFrom("srved@srved.com");
+		// customer.setSubject("Test Mail customer");
+		// customer.setHtml("Test Mail customer");
+
+		// var bookmark = new sendgrid.Email();
+		// bookmark.addTo("signorettif@gmail.com");
+		// bookmark.setFrom("srved@srved.com");
+		// bookmark.setSubject("Test Mail restaurant");
+		// bookmark.setHtml("Test Mail restaurant");
+
+	
+
+		var nonce = req.body.payment_method_nonce;
+		console.log(req.body);
+
 		var merchantAccountParams = {
 		individual: {
 		  firstName: "Jane",
@@ -75,38 +98,14 @@ var api={
 		};
 
 		gateway.merchantAccount.create(merchantAccountParams, function (err, result) {
-			console.log(result);
-			res.send(result.merchantAccount.id); 
-		});
-	},
-
-	checkout: function(req,res){
-
-		//var customer_email = req.body.customer_email;
-
-		var nonce = req.body.payment_method_nonce;
-		// var customer = new sendgrid.Email();
-
-		// //customer.addTo(customer_email);
-		// customer.addTo("jonobin@gmail.com");
-		// customer.setFrom("srved@srved.com");
-		// customer.setSubject("Test Mail customer");
-		// customer.setHtml("Test Mail customer");
-
-		// var bookmark = new sendgrid.Email();
-		// bookmark.addTo("signorettif@gmail.com");
-		// bookmark.setFrom("srved@srved.com");
-		// bookmark.setSubject("Test Mail restaurant");
-		// bookmark.setHtml("Test Mail restaurant");
-
-	
-
-		gateway.transaction.sale({
-			amount: '20.00',
-			merchantAccountId: merchant_id,
-			paymentMethodNonce: nonce
-		}, function (err, result) {
-			res.send(result);
+			var account = result.merchantAccount.id;
+			gateway.transaction.sale({
+				amount: '20.00',
+				merchantAccountId: account,
+				paymentMethodNonce: nonce
+			}, function (err, result) {
+				res.send(result);
+			});
 		});
 
 		
