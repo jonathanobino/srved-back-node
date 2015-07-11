@@ -1,0 +1,25 @@
+{
+  "name": "cieling-back",
+  "version": "1.0.0",
+  "description": "node backend cieling",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "node",
+    "npm",
+    "braintree",
+    "mongo",
+    "express",
+    "MEAN"
+  ],
+  "author": "Jonathan Obino",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "braintree": "^1.26.0",
+    "express": "^4.13.1",
+    "mongoose": "^4.0.6"
+  }
+}
