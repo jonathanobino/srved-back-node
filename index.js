@@ -26,8 +26,6 @@ app.get('/restaurants/:id/:cat', api.restaurants_id_cat);
 
 app.get('/get_token', api.get_token);
 
-app.post('/create_submerchant', api.create_submerchant);
-
 app.post('/checkout', api.checkout);
 
 app.listen(app.get('port'), function() {

@@ -49,7 +49,7 @@ var api={
 			if(err) res.send(err);
 		    res.send(response.clientToken);
 		});
-	}
+	},
 
 	checkout: function(req,res){
 
@@ -70,10 +70,7 @@ var api={
 		// bookmark.setSubject("Test Mail restaurant");
 		// bookmark.setHtml("Test Mail restaurant");
 
-	
-
-		var nonce = req.body.payment_method_nonce;
-		console.log(req.body);
+		// console.log(nonce);
 
 		var merchantAccountParams = {
 		individual: {
@@ -99,12 +96,14 @@ var api={
 
 		gateway.merchantAccount.create(merchantAccountParams, function (err, result) {
 			var account = result.merchantAccount.id;
+			//es.send(result);
 			gateway.transaction.sale({
 				amount: '20.00',
 				merchantAccountId: account,
-				paymentMethodNonce: nonce
+				paymentMethodNonce: nonce,
+				serviceFeeAmount: '1.00'
 			}, function (err, result) {
-				res.send(result);
+				 res.send(result);
 			});
 		});
 
