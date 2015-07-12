@@ -3,6 +3,7 @@ var braintree = require("braintree");
 var Restaurant = mongoose.model('Restaurant', require('../models/restaurant'));
 var sendgrid = require('sendgrid')("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");
 var html_mail = require('./mail');
+var html_mail_restaurant = require('./mail_restaurant');
 
 
 var gateway = braintree.connect({
@@ -71,7 +72,7 @@ var api={
 		bookmark.addTo(vars.restaurant_email);
 		bookmark.setFrom("reservations@srved.com");
 		bookmark.setSubject("Hi " + vars.restaurant_name + " you have a new reservation on Srved");
-		bookmark.setHtml(html_mail(vars));
+		bookmark.setHtml(html_mail_restaurant(vars));
 
 		// console.log(nonce);
 
