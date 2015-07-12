@@ -20,11 +20,11 @@ var restaurantSchema = new Schema({
 	imageUrl: String,
 	category: String,
 	menu:{
-		sides:[dish],
-		firsts:[dish],
-		seconds:[dish],
-		starters:[dish],
-		desserts:[dish]
+		"starters":[dish],
+		"first dishes":[dish],
+		"second dishes":[dish],
+		"sides":[dish],
+		"desserts":[dish]
 	}
 });
 

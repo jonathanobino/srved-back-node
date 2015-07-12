@@ -57,6 +57,7 @@ var api={
 
 		console.log(req.body);
 		var nonce = req.body.nonce;
+		var vars = req.body;
 		// var customer = new sendgrid.Email();
 
 		// //customer.addTo(customer_email);
@@ -75,10 +76,10 @@ var api={
 
 		var merchantAccountParams = {
 		individual: {
-		  firstName: "Jane",
+		  firstName: vars.restaurant_name,
 		  lastName: "Doe",
-		  email: "jane@14ladders.com",
-		  phone: "5553334444",
+		  email: vars.restaurant_email,
+		  phone: vars.restaurant_phone,
 		  dateOfBirth: "1981-11-19",
 		  address: {
 		    streetAddress: "111 Main St",
@@ -89,7 +90,7 @@ var api={
 		},
 		funding: {
 		  destination: braintree.MerchantAccount.FundingDestination.Email,
-		  email: "jane@14ladders.com"
+		  email: vars.restaurant_email
 		},
 		tosAccepted: true,
 		masterMerchantAccountId: "signofactory"
@@ -99,7 +100,7 @@ var api={
 			var account = result.merchantAccount.id;
 			//es.send(result);
 			gateway.transaction.sale({
-				amount: '20.00',
+				amount: vars.total,
 				merchantAccountId: account,
 				paymentMethodNonce: nonce,
 				serviceFeeAmount: '1.00'
