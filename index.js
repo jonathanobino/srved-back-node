@@ -4,6 +4,7 @@ var config = require('./config/config');
 var bodyParser = require("body-parser");
 var cors= require('cors');
 var api = require('./api/api');
+var dev= require('./api/dev');
 var app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -18,6 +19,8 @@ mongoose.connect(dbUrl,function(err){
 });
 
 app.use(cors());
+
+app.get('/',dev)
 
 app.get('/restaurants', api.restaurants);
 

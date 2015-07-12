@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var braintree = require("braintree");
 var Restaurant = mongoose.model('Restaurant', require('../models/restaurant'));
-var sendgrid = require('sendgrid')("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")
+var sendgrid = require('sendgrid')("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");
+var html_mail = require('./mail');
 
 
 var gateway = braintree.connect({
@@ -58,19 +59,19 @@ var api={
 		console.log(req.body);
 		var nonce = req.body.nonce;
 		var vars = req.body;
-		// var customer = new sendgrid.Email();
+		
+		var customer = new sendgrid.Email();
+		customer.addTo(customer_email);
+		customer.addTo("web-eH2Pay@mail-tester.com");
+		customer.setFrom("srved@srved.com");
+		customer.setSubject("Test Mail customer");
+		customer.setHtml(html_mail(vars));
 
-		// //customer.addTo(customer_email);
-		// customer.addTo("jonobin@gmail.com");
-		// customer.setFrom("srved@srved.com");
-		// customer.setSubject("Test Mail customer");
-		// customer.setHtml("Test Mail customer");
-
-		// var bookmark = new sendgrid.Email();
-		// bookmark.addTo("signorettif@gmail.com");
-		// bookmark.setFrom("srved@srved.com");
-		// bookmark.setSubject("Test Mail restaurant");
-		// bookmark.setHtml("Test Mail restaurant");
+		var bookmark = new sendgrid.Email();
+		bookmark.addTo("signorettif@gmail.com");
+		bookmark.setFrom("srved@srved.com");
+		bookmark.setSubject("Test Mail restaurant");
+		bookmark.setHtml(html_mail(vars));
 
 		// console.log(nonce);
 
@@ -104,11 +105,28 @@ var api={
 				merchantAccountId: account,
 				paymentMethodNonce: nonce,
 				serviceFeeAmount: '1.00'
-			}, function (err, result) {
-				 console.log(result);
-				 res.send(result);
-			});
+			}, 
+			// function (err, result) {
+			// 	 console.log(result);
+			// 	 res.send(result);
+			// }
+			function (err, result) {
+			if(err){
+				res.send(err);
+			} else {
+				sendgrid.send(customer, function(err,json){
+					if(err) console.log(err);
+				});
+				sendgrid.send(bookmark, function(err,json){
+					if(err) console.log(err);
+				});
+				res.send(result);
+			}		
+		}
+			);
 		});
+
+
 
 		
 
