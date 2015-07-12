@@ -63,14 +63,14 @@ var api={
 		var customer = new sendgrid.Email();
 		customer.addTo(vars.customer_email);
 		//customer.addTo("web-eH2Pay@mail-tester.com");
-		customer.setFrom("srved@srved.com");
-		customer.setSubject("Test Mail customer");
+		customer.setFrom(vars.restaurant_email);
+		customer.setSubject("Hi " + vars.customer_name + " here\'s your Srved reservation");
 		customer.setHtml(html_mail(vars));
 
 		var bookmark = new sendgrid.Email();
 		bookmark.addTo(vars.restaurant_email);
-		bookmark.setFrom("srved@srved.com");
-		bookmark.setSubject("Test Mail restaurant");
+		bookmark.setFrom("reservations@srved.com");
+		bookmark.setSubject("Hi " + vars.restaurant_name + " you have a new reservation on Srved");
 		bookmark.setHtml(html_mail(vars));
 
 		// console.log(nonce);
