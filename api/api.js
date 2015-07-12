@@ -55,7 +55,8 @@ var api={
 
 		//var customer_email = req.body.customer_email;
 
-		var nonce = req.body.payment_method_nonce;
+		console.log(req.body);
+		var nonce = req.body.nonce;
 		// var customer = new sendgrid.Email();
 
 		// //customer.addTo(customer_email);
@@ -103,6 +104,7 @@ var api={
 				paymentMethodNonce: nonce,
 				serviceFeeAmount: '1.00'
 			}, function (err, result) {
+				 console.log(result);
 				 res.send(result);
 			});
 		});

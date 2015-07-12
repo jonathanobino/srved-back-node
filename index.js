@@ -7,6 +7,7 @@ var api = require('./api/api');
 var app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.set('port', (process.env.PORT || 5000));
 
 var dbUrl = config.base + config.user+":"+config.psw+config.uri;
