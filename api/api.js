@@ -79,7 +79,7 @@ var api={
 		  firstName: vars.restaurant_name,
 		  lastName: "Doe",
 		  email: vars.restaurant_email,
-		  phone: vars.restaurant_phone,
+		  phone: "5553334444",
 		  dateOfBirth: "1981-11-19",
 		  address: {
 		    streetAddress: "111 Main St",
