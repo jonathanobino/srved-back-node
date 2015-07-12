@@ -15,7 +15,10 @@ var gateway = braintree.connect({
 
 var api={
 	restaurants: function(req,res){
-		Restaurant.find({}).exec(function(err,result){
+		Restaurant
+		.find({})
+		.sort({name: 1})
+		.exec(function(err,result){
 		if(err) res.send(err);
 		res.send(result);
 		});
