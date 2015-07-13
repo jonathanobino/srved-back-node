@@ -58,15 +58,11 @@ var api={
 
 	checkout: function(req,res){
 
-		//var customer_email = req.body.customer_email;
-
-		console.log(req.body);
 		var nonce = req.body.nonce;
 		var vars = req.body;
 		
 		var customer = new sendgrid.Email();
 		customer.addTo(vars.customer_email);
-		//customer.addTo("web-eH2Pay@mail-tester.com");
 		customer.setFrom(vars.restaurant_email);
 		customer.setSubject("Hi " + vars.customer_name + " here\'s your Srved reservation");
 		customer.setHtml(html_mail(vars));
@@ -76,8 +72,6 @@ var api={
 		bookmark.setFrom("reservations@srved.com");
 		bookmark.setSubject("Hi " + vars.restaurant_name + " you have a new reservation on Srved");
 		bookmark.setHtml(html_mail_restaurant(vars));
-
-		// console.log(nonce);
 
 		var merchantAccountParams = {
 		individual: {
@@ -110,10 +104,6 @@ var api={
 				paymentMethodNonce: nonce,
 				serviceFeeAmount: '1.00'
 			}, 
-			// function (err, result) {
-			// 	 console.log(result);
-			// 	 res.send(result);
-			// }
 			function (err, result) {
 			if(err){
 				res.send(err);
@@ -130,27 +120,6 @@ var api={
 			);
 		});
 
-
-
-		
-
-
-		// gateway.transaction.sale({
-		//   amount: '10.00',
-		//   paymentMethodNonce: nonce
-		// }, function (err, result) {
-		// 	if(err){
-		// 		res.send(err);
-		// 	} else {
-		// 		sendgrid.send(customer, function(err,json){
-		// 			if(err) console.log(err);
-		// 		});
-		// 		sendgrid.send(bookmark, function(err,json){
-		// 			if(err) console.log(err);
-		// 		});
-		// 		res.send(result);
-		// 	}		
-		// });
 	}
 }
 

@@ -14,7 +14,7 @@ var dbUrl = config.base + config.user+":"+config.psw+config.uri;
 
 mongoose.connect(dbUrl,function(err){
 	if(err) console.log(err);
-	console.log('connected');
+	else console.log('connected');
 });
 
 app.use(cors());
